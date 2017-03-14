@@ -1,0 +1,36 @@
+{
+  "name" : "AzureAgent",
+  "version" : "0.1",
+  "bannerVersion" : "0.1.0",
+  "eventLogName" : "azagent.log",
+  "eventSourceAgent" : "AzureAgent",
+  "eventSourceRuntime" : "AzureAgent 0.1.0",
+
+  "logPath" : "c:\\WindowsAzure\\Logs",
+  "rootPath" : "c:\\WindowsAzure\\",
+  "configPath" : "c:\\WindowsAzure\\Config",
+  "dataPath" : "c:\\WindowsAzure\\Data",
+  "resourcesPath" : "c:\\WindowsAzure\\Resources",
+  "allowMultipleRoles" : false,
+  "executionMode" : "IaaS",
+  "queryForGAUpdatesInSeconds" : 300,
+  "hostVMAgentPluginPort" : 2222,
+  "enablePushInVMLogs" : false,
+  "pushInVMLogsIntervalInMinutes" : 15,
+  "collectGuestLogsFolder" : "c:\\WindowsAzure\\Logs",
+
+  "operatingVersion" : "any",
+  "operatingVersionsSupported" : [
+    // The full Windows may also have win7 but Nano is only past Win8;
+    // at some point may have a separate operating version.
+    "win8"
+  ],
+
+  "cacheFiles" : true,
+  "traceLevel" : "VERBOSE",
+
+  "pluginOverrides" : {
+    "Microsoft.Compute.CustomScriptExtension" : "c:\\Windows\\NanoGuestAgent\\Microsoft.Compute.CustomScriptExtension_Nano.zip",
+    "Microsoft.Compute.VMAccessAgent" : "c:\\Windows\\NanoGuestAgent\\Microsoft.Compute.VMAccessAgent_Nano.zip",
+    "Microsoft.Compute.BGInfo" : "c:\\Windows\\NanoGuestAgent\\Microsoft.Compute.BGInfo_Nano.zip",
+  }
