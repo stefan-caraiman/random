@@ -1,0 +1,27 @@
+FROM centos:6
+MAINTAINER stefan.caraiman@tss-yonder.com
+
+# Install required packages
+RUN yum update -y
+RUN yum -y install gcc rpm-build spectool autoconf pcre-devel sudo make openssl-devel wget yum-utils --enablerepo=extras
+
+# Add the user for creating custom rpms
+RUN useradd rpmbuilder -d /home/rpmbuilder -m -u 10321
+RUN echo "rpmbuilder ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/rpmbuilder
+RUN chmod 400 /etc/sudoers.d/rpmbuilder
+
+# Add the local archive and script to the image
+COPY build_rpm.sh /home/rpmbuilder/build_rpm.sh
+COPY rpmbuild.tar.gz /home/rpmbuilder/
+
+# Unarchive and set permissions for the files
+RUN chmod +x /home/rpmbuilder/build_rpm.sh
+RUN tar xf /home/rpmbuilder/rpmbuild.tar.gz -C /home/rpmbuilder
+RUN sudo chown -R rpmbuilder:rpmbuilder /home/rpmbuilder/rpmbuild/
+
+# Change working directory and run the script for creating the rpm
+WORKDIR /home/rpmbuilder
+USER rpmbuilder
+
+CMD ["/home/rpmbuilder/build_rpm.sh"]
+#ENTRYPOINT ["/home/rpmbuilder/build_rpm.sh"]
